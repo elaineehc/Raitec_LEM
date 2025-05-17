@@ -20,31 +20,32 @@ def processar_csv(input_csv, escala):
 
     #Calcula a força (N)
     if escala == 50:
-        df["Forca (N)"] = df["kalman_angle_roll"] * 0.03611 * 9.80665 #fazer testes pra achar as constantes certas
+        df["Forca (N)"] = ((df["kalman_angle_roll"] * 1.0363) + 0.0414) / 2     #fazer testes pra achar as constantes certas
     elif escala == 100:
-        df["Forca (N)"] = df["kalman_angle_roll"] * 0.09028 * 9.80665 #fazer testes pra achar as constantes certas
+        df["Forca (N)"] = ((df["kalman_angle_roll"] * 1.0363) + 0.0414)         #fazer testes pra achar as constantes certas
     elif escala == 200:
-        df["Forca (N)"] = df["kalman_angle_roll"] * 0.18111 * 9.80665 #fazer testes pra achar as constantes certas
+        df["Forca (N)"] = ((df["kalman_angle_roll"] * 1.0363) + 0.0414) * 2     #fazer testes pra achar as constantes certas
     else:
         raise ValueError("A escala utilizada é inválida.")
 
     # Seleciona colunas relevantes
-    df_filtrado = df[["time", "Forca (N)"]]
+    df_filtrado = df[["time", "kalman_angle_roll", "Forca (N)"]]
+
+    #Gera gráfico de força
+    plt.ticklabel_format(style='plain', axis='both')
+    plt.figure(figsize=(10, 6))
+    plt.plot(df_filtrado["Forca (N)"])
+    plt.title("Força ao longo do tempo")
+    plt.xlabel("Tempo (ms)")
+    plt.ylabel("Forca (N)")
+    plt.grid(True)
+    plt.savefig("grafico_forca.png")
+    print("Gráfico salvo como: grafico_forca.png")
 
     # Salva novo CSV
     output_csv = os.path.splitext(input_csv)[0] + "_transformado.csv"
     df_filtrado.to_csv(output_csv, index=False)
     print(f"Arquivo salvo como: {output_csv}")
-
-    #Gera gráfico de força
-    plt.figure(figsize=(10, 6))
-    plt.plot(df_filtrado["Forca (N)"])
-    plt.title("Força ao longo do tempo")
-    plt.xlabel("Índice")
-    plt.ylabel("Forca (N)")
-    plt.grid(True)
-    plt.savefig("grafico_forca.png")
-    print("Gráfico salvo como: grafico_forca.png")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
