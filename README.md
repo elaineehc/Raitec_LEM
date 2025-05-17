@@ -6,20 +6,18 @@ Para criar o executável é necessário instalar o PyInstaller:
 
 <pre> pip install pyinstaller </pre>
 
-Depois basta rodar a linha abaixo do diretório onde se encontra o arquivo main.py.
-<pre> pyinstaller --onefile main.py </pre>
+Depois basta rodar a linha abaixo do diretório onde se encontra o arquivo converteForca.py.
+<pre> pyinstaller --onefile converteForca.py </pre>
 
 ## Rodar o executável
-O executável é criado na pasta dist, que está no mesmo diretório do arquivo main.py, e precisa de 3 informações de entrada:
+O executável é criado na pasta dist, que está no mesmo diretório do arquivo converteForca.py, e precisa de 3 informações de entrada:
 - O caminho do arquivo .csv dos dados coletados
-- Alguma informação do corpo de prova (área ou diâmetro, pelo menos uma das duas)
-- A escala adotada (no momento, 50kg ou 100kg)
+- A escala adotada (50kg, 100kg ou 200kg)
 
 Essas informações devem ser passadas da seguinte forma:
-<pre> main.exe caminho/arquivo/csv.csv --area VALOR_AREA --diametro VALOR_DIAMETRO --escala VALOR_ESCALA</pre>
-O valor da área ou do diâmetro pode ser omitido, mas nunca ambos.
+<pre> converteForca.exe "caminho/arquivo/dados.csv" --escala VALOR_ESCALA</pre>
 
 ## Saídas
 O executável retorna:
-- um arquivo .csv contendo as informações calculadas (Força (N) e Tensão (Pa)) no mesmo diretório do arquivo usado como entrada
+- um arquivo .csv contendo as informações calculadas (em 1000kgf, tonelada-força) no mesmo diretório do arquivo usado como entrada
 - uma imagem contendo o gráfico plotado dentro da pasta dist
