@@ -1,4 +1,4 @@
-Aplicativo LEM (primeira versão)  
+Aplicativo LEM (versão 10/05/2025)  
 Laboratório de Ensaio de Materiais
 
 ## Criar o executável
